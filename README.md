@@ -10,7 +10,7 @@ docker run -v $PATH/to/credential.json:/credential.json -e SRC="gs://some-bucket
 
 ### Consume as a helm chart init container
 
-Using the CookieCutter template for vapor-helm-starter, this can be declared inline in the deployment spec. We can also ease the integration by leveraging the values.yaml segments where appropriate to configure the init container:
+Using the CookieCutter template for [vapor-helm-starter](https://github.com/vapor-ware/vapor-helm-starter), this can be declared inline in the deployment spec. We can also ease the integration by leveraging the values.yaml segments where appropriate to configure the init container:
 
 Consider the following init container snippet, presuming we have a secret for the GCP Service Account JSON Credential mounted at `/secrets/google-sync-credential`, and we want to download to the `/data` path:
 
