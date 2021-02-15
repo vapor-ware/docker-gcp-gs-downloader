@@ -40,10 +40,10 @@ parseAnnotations() {
 
 	# parse source
 	FOUND_SOURCE=$(cat ${ANNOTATION_FILE} | grep ${ANNOTATION_SOURCE})
-	echo "Found source: ${FOUND_SOURCE}"
 
 	# Export the PARSED_SOURCE var
-	PARSED_SOURCE=$(echo ${FOUND_SOURCE} | cut -f 2 -d =)
+	PARSED_SOURCE=$(echo ${FOUND_SOURCE} | cut -f 2 -d = | tr -d '"')
+	echo "Found source: ${PARSED_SOURCE}"
 }
 
 
