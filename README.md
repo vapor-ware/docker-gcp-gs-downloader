@@ -1,4 +1,4 @@
-# docker-gs-downloader
+# gcp-gs-downloader
 
 A super simple, lightweight container intended to be used as an init-container in kubernetes to download assets from Google Cloud Storage.
 
