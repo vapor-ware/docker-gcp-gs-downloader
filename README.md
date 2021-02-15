@@ -56,7 +56,3 @@ secrets:
       labels: {}
       annotations: {}
 ```
-
-## Issues / Comments?
-
-File an [Issue](/issues)
