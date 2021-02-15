@@ -15,6 +15,15 @@ Using the CookieCutter template for [vapor-helm-starter](https://github.com/vapo
 Consider the following init container snippet, presuming we have a secret for the GCP Service Account JSON Credential mounted at `/secrets/google-sync-credential`, and we want to download to the `/data` path:
 
 ```yaml
+      volumes:
+        - name: workspace
+          emptyDir: {}
+        - name: podinfo
+          downwardAPI:
+            items:
+              - path: "annotations"
+                fieldRef:
+                  fieldPath: metadata.annotations
       initContainers:
       - name: download
         image: vaporio/gcp-gs-downloader:latest
