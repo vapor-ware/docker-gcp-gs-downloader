@@ -5,7 +5,7 @@ A super simple, lightweight container intended to be used as an init-container i
 ### Usage
 
 ```shell
-docker run -v $PATH/to/credential.json:/credential.json -e SRC="gs://some-bucket/*.fileglob" -e DEST="/data/" vaporio/gcp-gs-downloader:latest
+docker run -v $PATH/to/credential.json:/credential.json -e SRC="gs://some-bucket/*.fileglob" vaporio/gcp-gs-downloader:latest
 ```
 
 ### Consume as a helm chart init container
