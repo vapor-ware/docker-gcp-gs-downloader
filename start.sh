@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # A simple wrapper to parse out details for a file sync from GCS
 # configurable via ENV SRC or Annotations `gs/src`
@@ -34,7 +34,16 @@ parseAnnotations() {
 	# if the file does not exist, presume local runtime or non-k8s tooling
 	if [ ! -f "${ANNOTATION_FILE}" ];
 	then
+		gcloud auth activate-service-account --key-file=${GOOGLE_APPLICATION_CREDENTIALS}
+		files=$(gsutil ls -r "gs://${GCS_BUCKET}/*/*.mbtiles")
+		myarray=($files)
+		IFS=$'\n' sorted=($(sort -r <<<"${myarray[*]}"))
+		unset IFS
+
+		PARSED_SOURCE="${sorted[0]}"
+
 		echo "Missing pod annotations, skipping Kubernetes integration. Expecting configuration to be provided via ENV vars SRC and DEST."
+		echo "Falling back to most recent mbtiles file in bucket: ${PARSED_SOURCE}"
 		return
 	fi
 
