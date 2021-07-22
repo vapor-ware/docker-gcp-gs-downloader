@@ -35,14 +35,14 @@ parseAnnotations() {
 	if [ ! -f "${ANNOTATION_FILE}" ];
 	then
 		gcloud auth activate-service-account --key-file=${GOOGLE_APPLICATION_CREDENTIALS}
-		files=$(gsutil ls -r "gs://${GCS_BUCKET}/*/*.mbtiles")
+		files=$(gsutil ls -r "gs://${BUCKET_NAME}/*/*.mbtiles")
 		myarray=($files)
 		IFS=$'\n' sorted=($(sort -r <<<"${myarray[*]}"))
 		unset IFS
 
 		PARSED_SOURCE="${sorted[0]}"
 
-		echo "Missing pod annotations, skipping Kubernetes integration. Expecting configuration to be provided via ENV vars SRC and DEST."
+		echo "Missing pod annotations, skipping Kubernetes integration."
 		echo "Falling back to most recent mbtiles file in bucket: ${PARSED_SOURCE}"
 		return
 	fi
