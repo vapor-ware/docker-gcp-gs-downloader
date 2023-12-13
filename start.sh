@@ -16,6 +16,7 @@ printUsage () {
 	echo "This script expects ENV vars SRC to be provided"
 	echo "Alternatively: if in kubernetes, use the downward API to provide ANNOTATIONS"
 	echo "at /etc/podinfo/annotations. It will parse for gs/src"
+	echo "if the annotation is not provided, it will fetch the latest asset from gs"
 }
 
 # The integration point from Kubernetes expects a path in
@@ -32,7 +33,8 @@ printUsage () {
 
 parseAnnotations() {
 	# if the file does not exist, presume local runtime or non-k8s tooling
-	if [ ! -f "${ANNOTATION_FILE}" ];
+	# or if the file exists but the annotation is missing, fallback to the latest mbtile
+	if [ ! -f "${ANNOTATION_FILE}" ] || [ $(cat ${ANNOTATION_FILE} | grep -c ${ANNOTATION_SOURCE}) -eq 0 ];
 	then
 		gcloud auth activate-service-account --key-file=${GOOGLE_APPLICATION_CREDENTIALS}
 		files=$(gsutil ls -r "gs://${BUCKET_NAME}/*/*.mbtiles")
