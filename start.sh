@@ -38,7 +38,8 @@ parseAnnotations() {
 	then
 		gcloud auth activate-service-account --key-file=${GOOGLE_APPLICATION_CREDENTIALS}
 		files=$(gsutil ls -r "gs://${BUCKET_NAME}/*/*.mbtiles")
-		myarray=($files)
+		IFS=$'\n' myarray=($files)
+		unset IFS
 		IFS=$'\n' sorted=($(sort -r <<<"${myarray[*]}"))
 		unset IFS
 
